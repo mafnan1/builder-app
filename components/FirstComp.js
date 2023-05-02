@@ -7,13 +7,15 @@ const brand = ({ value }) => {
   );
 };
 const title = ({ value }) => {
-  <input
-    className="p-3 border-neutral-400 border rounded-md"
-    type="text"
-    defaultValue={value}
-    name="title"
-    id="title"
-  />;
+  return (
+    <input
+      className="p-3 border-neutral-400 border rounded-md"
+      type="text"
+      defaultValue={value}
+      name="title"
+      id="title"
+    />
+  );
 };
 const description = ({ value }) => {
   return (
@@ -28,11 +30,13 @@ const description = ({ value }) => {
 };
 const FirstComp = ({ posts }) => {
   const [post, setPost] = useState(false);
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    let title = e.target[0].value;
+    let description = e.target[1].value;
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(post),
+      body: JSON.stringify({ title, description }),
     };
     fetch("https://dummyjson.com/products/add", requestOptions);
   };
@@ -50,14 +54,13 @@ const FirstComp = ({ posts }) => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          handleSubmit();
+          handleSubmit(e);
         }}
         className="gap-4 grid grid-cols-2"
       >
         {posts?.products.map((item, idx) => (
           <div id={item.id} key={idx} className="flex flex-col gap-3 ">
             {Object.keys(localData).map((it) => {
-              console.log(localData[it]);
               // return <>{
               if (localData[it] && item[it]) {
                 return React.createElement(localData[it], {
