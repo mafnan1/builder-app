@@ -24,8 +24,8 @@ const FirstComp = ({ posts }) => {
         e.preventDefault()
         handleSubmit()
       }} className="gap-4 grid grid-cols-2">
-        {posts?.products.map((it) => (
-          <div id={it.id} className="flex flex-col gap-3 ">
+        {posts?.products.map((it,idx) => (
+          <div id={it.id} key={idx} className="flex flex-col gap-3 ">
             <div className="">Title: {it.brand}</div>
             <input onChange={(e) => setPost({ ...it, title: e.target.value })} className="p-3 border-neutral-400 border rounded-md" type="text" name="name" id="name" defaultValue={it.title} />
             <textarea name="desc" id="desc" className="p-3 rounded-md border border-neutral-400  resize-none" rows={4} defaultValue={it.description}></textarea>
